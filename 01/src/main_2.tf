@@ -5,15 +5,13 @@ terraform {
       version = "~> 3.0.1"
     }
   }
-  required_version = ">=0.13" /*Многострочный комментарий.
- Требуемая версия terraform */
+  required_version = ">=0.13" 
 }
+
 provider "docker" {
   host     = "ssh://joos@158.160.126.205:22"
   ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null"]
 }
-
-#однострочный комментарий
 
 resource "random_password" "root_pass" {
   length      = 16
