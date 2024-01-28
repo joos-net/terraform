@@ -2,7 +2,7 @@
 resource "yandex_vpc_network" "develop" {
   name = var.vpc_name
 }
-######################## Subnet A################################
+######################## Subnet A ################################
 resource "yandex_vpc_subnet" "develop" {
   name           = var.vpc_name
   zone           = var.default_zone_a
@@ -10,7 +10,7 @@ resource "yandex_vpc_subnet" "develop" {
   v4_cidr_blocks = var.default_cidr_a
   route_table_id = yandex_vpc_route_table.rt.id
 }
-######################## Subnet B################################
+######################## Subnet B ################################
 resource "yandex_vpc_subnet" "bd" {
   name           = var.subnet_db
   zone           = var.default_zone_b
@@ -18,7 +18,7 @@ resource "yandex_vpc_subnet" "bd" {
   v4_cidr_blocks = var.default_cidr_b
   route_table_id = yandex_vpc_route_table.rt.id
 }
-######################## NAT B################################
+######################## NAT ################################
 resource "yandex_vpc_gateway" "nat_gateway" {
   folder_id      = var.folder_id
   name = "test-gateway"
