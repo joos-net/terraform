@@ -27,7 +27,7 @@ resource "yandex_compute_instance" "foreach" {
   }
   network_interface {
     subnet_id = yandex_vpc_subnet.develop.id
-    nat       = var.nat
+    nat       = false
   }
 
   metadata = {
