@@ -65,7 +65,6 @@ variable "each_vm" {
   } ]
 }
 
-
 ######################## VM Variables ################################
 variable "cores" {
   type = number
