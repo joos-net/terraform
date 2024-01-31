@@ -33,6 +33,11 @@ variable "vpc_name" {
   description = "VPC network&subnet name"
 }
 
+######################## Image ################################
+data "yandex_compute_image" "ubuntu" {
+  family = "ubuntu-2004-lts"
+}
+######################## Metadata ################################
 variable "metadata" {
     type = map(object({
       serial-port-enable = number
@@ -58,4 +63,35 @@ variable "each_vm" {
     ram = 2,
     disk = 10
   } ]
+}
+
+
+######################## VM Variables ################################
+variable "cores" {
+  type = number
+  default = 2
+}
+variable "memory" {
+  type = number
+  default = 2
+}
+
+variable "core_fraction" {
+  type = number
+  default = 20
+}
+
+variable "platform_id" {
+  type = string
+  default = "standard-v3"
+}
+
+variable "preemptible" {
+  type = bool
+  default = true
+}
+
+variable "nat" {
+  type = bool
+  default = true
 }

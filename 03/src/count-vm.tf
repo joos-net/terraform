@@ -1,18 +1,13 @@
-######################## Image ################################
-data "yandex_compute_image" "ubuntu" {
-  family = "ubuntu-2004-lts"
-}
-
 ######################## Instance 1 ################################
 resource "yandex_compute_instance" "count" {
   count       = 2
   name        = "web-${count.index + 1}"
-  platform_id = "standard-v3"
+  platform_id = var.platform_id
   zone        = var.default_zone
   resources {
-    cores         = 2
-    memory        = 2
-    core_fraction = 20
+    cores         = var.cores
+    memory        = var.memory
+    core_fraction = var.core_fraction
   }
   boot_disk {
     initialize_params {
@@ -20,11 +15,11 @@ resource "yandex_compute_instance" "count" {
     }
   }
   scheduling_policy {
-    preemptible = true
+    preemptible = var.preemptible
   }
   network_interface {
     subnet_id = yandex_vpc_subnet.develop.id
-    nat       = true
+    nat       = var.nat
     security_group_ids = [yandex_vpc_security_group.example.id]
   }
 

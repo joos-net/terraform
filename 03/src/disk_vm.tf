@@ -1,6 +1,6 @@
 resource "yandex_compute_disk" "disk" {
   count = 3
-  name       = "empty-disk-${count.index}"
+  name       = "disk-${count.index}"
   type       = "network-hdd"
   zone       = var.default_zone
   size       = 10
@@ -9,12 +9,12 @@ resource "yandex_compute_disk" "disk" {
 ######################## Instance 1 ################################
 resource "yandex_compute_instance" "storage" {
   name        = "storage"
-  platform_id = "standard-v3"
+  platform_id = var.platform_id
   zone        = var.default_zone
   resources {
-    cores         = 2
-    memory        = 2
-    core_fraction = 20
+    cores         = var.cores
+    memory        = var.memory
+    core_fraction = var.core_fraction
   }
   boot_disk {
     initialize_params {
@@ -28,12 +28,11 @@ dynamic "secondary_disk" {
     }   
   }
   scheduling_policy {
-    preemptible = true
+    preemptible = var.preemptible
   }
   network_interface {
     subnet_id = yandex_vpc_subnet.develop.id
-    nat       = true
-    security_group_ids = [yandex_vpc_security_group.example.id]
+    nat       = var.nat
   }
 
   metadata = {
