@@ -49,13 +49,13 @@ variable "each_vm" {
   type = list(object({  vm_name=string, cpu=number, ram=number, disk=number }))
   default = [ {
     vm_name = "main",
-    cpu = 2,
-    ram = 2,
-    disk = 10
+    cpu = 4,
+    ram = 4,
+    disk = 20
   },{
     vm_name = "replica",
-    cpu = 3,
-    ram = 4,
+    cpu = 2,
+    ram = 2,
     disk = 10
   } ]
 }
