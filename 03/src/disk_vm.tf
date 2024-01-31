@@ -40,6 +40,4 @@ dynamic "secondary_disk" {
     ssh-keys           = local.ssh-keys
   }
     
-  depends_on = [yandex_compute_instance.foreach]  
-
 }
