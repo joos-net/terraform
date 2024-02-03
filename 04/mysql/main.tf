@@ -21,8 +21,7 @@ module "mysql_servers" {
     mysql_name = "my_sql_test"
     mysql_network_id = module.vpc_prod.vpc_id
     mysql_disk_size = 16
-    HA = false
-    hosts_definition = var.HA == false ? local.not_ha : local.very_ha
+    hosts_definition = var.HA == true ? local.very_ha : local.not_ha
 }
 
 module "db_user" {

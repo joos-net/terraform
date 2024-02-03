@@ -19,6 +19,6 @@ variable "folder_id" {
 
 variable "HA" {
   type = bool
-  default = false
+  default = true
   description = "high availability"
 }
