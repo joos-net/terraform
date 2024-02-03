@@ -1,16 +1,10 @@
 locals {
-  not_ha = [{   
-      zone             = module.vpc_prod.public_subnet["net-ru-central1-a"].zone
-      subnet_id        = module.vpc_prod.public_subnet["net-ru-central1-a"].subnet_id
-    }]
-  very_ha = [{   
-      zone             = module.vpc_prod.public_subnet["net-ru-central1-a"].zone
-      subnet_id        = module.vpc_prod.public_subnet["net-ru-central1-a"].subnet_id
-    },{   
-      zone             = module.vpc_prod.public_subnet["net-ru-central1-b"].zone
-      subnet_id        = module.vpc_prod.public_subnet["net-ru-central1-b"].subnet_id
-    }
-    ]
+  not_ha = [{ zone = module.vpc_prod.public_subnet["net-ru-central1-a"].zone
+      subnet_id = module.vpc_prod.public_subnet["net-ru-central1-a"].subnet_id }]
+  very_ha = [{ zone = module.vpc_prod.public_subnet["net-ru-central1-a"].zone
+      subnet_id = module.vpc_prod.public_subnet["net-ru-central1-a"].subnet_id },{   
+      zone = module.vpc_prod.public_subnet["net-ru-central1-b"].zone
+      subnet_id = module.vpc_prod.public_subnet["net-ru-central1-b"].subnet_id }]
 }
 
 module "vpc_prod" {
