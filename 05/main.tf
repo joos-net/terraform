@@ -3,6 +3,7 @@ terraform {
   required_providers {
     yandex = {
       source = "yandex-cloud/yandex"
+      version = "= 0.107.0"
     }
   }
   required_version = ">= 0.13"
@@ -50,11 +51,12 @@ resource "yandex_compute_instance" "compose" {
 
   network_interface {
     subnet_id          = yandex_vpc_subnet.subnet.id
-    nat                = true
+    #nat                = true
+    security_group_ids = [yandex_vpc_security_group.example.id]
   }
 
   metadata = {
-    user-data = "${file("./meta.yml")}"
+    user-data = "./meta.yml"
   }
 
 }
@@ -67,5 +69,27 @@ resource "yandex_vpc_subnet" "subnet" {
   name           = "subnet"
   zone           = "ru-central1-a"
   network_id     = yandex_vpc_network.network.id
-  v4_cidr_blocks = ["192.168.10.0/28"]
+  v4_cidr_blocks = ["192.168.10.0/24"]
+}
+
+
+resource "yandex_vpc_security_group" "example" {
+  name        = "Test security group"
+  description = "Description for security group"
+  network_id  = yandex_vpc_network.network.id
+
+  ingress {
+    protocol       = "TCP"
+    description    = "Rule description 1"
+    v4_cidr_blocks = ["192.168.10.0/24"]
+    port           = 8080
+  }
+
+  egress {
+    protocol       = "ANY"
+    description    = "Rule description 2"
+    v4_cidr_blocks = ["192.168.10.0/24"]
+    from_port      = 8090
+    to_port        = 8099
+  }
 }
