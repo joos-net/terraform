@@ -28,3 +28,44 @@ provider "yandex" {
   service_account_key_file = file("~/authorized_key.json")
   zone                     = "ru-central1-b"
 }
+
+# Бастион хост
+resource "yandex_compute_instance" "compose" {
+
+  zone = "ru-central1-a"
+  name = "test"
+
+  resources {
+    core_fraction = 20
+    cores         = 2
+    memory        = 2
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = "fd8s17cfki4sd4l6oa59"
+      size     = 15
+    }
+  }
+
+  network_interface {
+    subnet_id          = yandex_vpc_subnet.subnet.id
+    nat                = true
+  }
+
+  metadata = {
+    user-data = "${file("./meta.yml")}"
+  }
+
+}
+
+resource "yandex_vpc_network" "network" {
+  name = "network"
+}
+
+resource "yandex_vpc_subnet" "subnet" {
+  name           = "subnet"
+  zone           = "ru-central1-a"
+  network_id     = yandex_vpc_network.network.id
+  v4_cidr_blocks = ["192.168.10.0/28"]
+}
